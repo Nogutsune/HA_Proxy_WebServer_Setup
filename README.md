@@ -96,7 +96,7 @@ This solution demonstrate knowlegde on lot of DevOps tools like Vagrant, Terrafo
 
 - Brief summary of what you disliked about your solution
 
-Instead of assigning fixed ips to the VMs, I could have used dynamic ips. But I haven't hardcoded ips anywhere the Ansible playbook read ips from inventory file only. 
+Instead of assigning fixed ips to the VMs, I could have used dynamic ips. But I haven't hardcoded ips anywhere. Ansible playbook read ips from inventory file only. 
 
 - Configurable Round Robin / Sticky Load Balancer
 
