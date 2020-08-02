@@ -1,0 +1,94 @@
+---
+#playbook for installing apache on the webservers and setting up index.html webpage on /var/www/html/index.html
+- name: Webserver Setup
+  hosts: webservers
+  gather_facts: false
+  become: true
+  become_method: sudo
+
+  handlers:
+    - name: restart apache2
+      service: name=apache2 state=restarted
+
+  vars:
+    html : "Hello World"
+    ip  : "{{ inventory_hostname }}"
+
+  tasks:
+    - debug: var=group_names
+    #- debug: var=hostvars[inventory_hostname]
+
+    #Logic to add webserver identifier and ip along with Hello World
+    - name: Setting html for instance 1
+      set_fact:
+        html : "Hello World from webserver1, ip: {{ inventory_hostname }}"
+      when: ip == "{{ groups['webservers'][0] }}"
+
+    - name: Setting html for instance 2
+      set_fact:
+        html : "Hello World from webserver2, ip: {{ inventory_hostname }}"
+      when: ip == "{{ groups['webservers'][1] }}"
+
+    - debug: msg="{{ html }}"
+
+    - name: Install Apache
+      apt: name=apache2 update_cache=yes state=present
+    - service:
+          name: apache2
+          state: started
+          enabled: yes
+
+    - name: Create default index page
+      copy:
+        dest: /var/www/html/index.html
+        content: "{{ html }}"
+        mode: 0644
+      become: true
+      notify:
+        - restart apache2
+
+###########################################################################################################
+#Playbook to setup HA proxy loadbalancer and set config file for roundrobin or sticky session based on
+# sticky_session value passed
+- name: Loadbalancer Setup
+  hosts: loadbalancer
+  gather_facts: false
+  become: true
+  become_method: sudo
+
+  handlers:
+    - name: restart HAproxy
+      service: name=haproxy state=restarted
+
+  vars:
+    webserver1_ip : "{{ groups['webservers'][0] }}"
+    webserver2_ip : "{{ groups['webservers'][1] }}"
+
+  tasks:
+
+    #- debug: var=webserver1_ip
+
+    - name: Install HAproxy
+      apt: name=haproxy update_cache=yes state=present
+
+    #For roundrobin setup
+    - name: Replacing the default HAproxy conf with costumised one RoundRobin
+      template:
+           src: templates/haproxy.cfg.j2
+           dest: /etc/haproxy/haproxy.cfg
+           mode: 0644
+      become: true
+      when:  sticky_session == "false"
+      notify:
+        - restart HAproxy
+
+    #For sticky session setup
+    - name: Replacing the default HAproxy conf with costumised one Sticky Session
+      template:
+           src: templates/haproxy_sticky_session.cfg.j2
+           dest: /etc/haproxy/haproxy.cfg
+           mode: 0644
+      become: true
+      when:  sticky_session == "true"
+      notify:
+        - restart HAproxy
