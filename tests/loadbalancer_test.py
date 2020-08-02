@@ -28,7 +28,7 @@ def test_haproxy_services_running_and_enabled(host):
     assert service.is_running
     assert service.is_enabled
 
-# Testcase for validating loadbalancer is working fine even one node is switched off(manually)
+# Testcase for validating loadbalancer is working fine even one node is down
 def test_loadbalancer_active_after_one_node_goes_down(host):
     host2 = testinfra.get_host("ansible://192.168.33.20?ansible_inventory=inventory/hosts&force_ansible=True",sudo=True)
     try:
