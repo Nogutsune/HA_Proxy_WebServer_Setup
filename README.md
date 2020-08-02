@@ -53,3 +53,33 @@ Repeatedly RUN `curl 192.168.33.30` or RUN `192.168.33.30` in browser (192.168.3
 ![snapshot 1](https://github.com/Nogutsune/HA_Proxy_WebServer_Setup/blob/master/Screenshots/ScreenShot1.png)
 
 If one of the node (webserver) is down the loadbalancer automatically serves traffic from healhy node.
+
+## Executing Automated Infrastructure tests
+
+I have used testinfra as a automated testing tool for testing the Infrastructure. More Details (https://testinfra.readthedocs.io/en/latest/).
+
+**For testing Webservers** 
+
+I have written 4 testcases for testing webservers
+
+- TestCase for having root prevelleges
+- TestCase for validating apache is installed on the webservers
+- TestCase for validating the apache service is running on the webservers
+- TestCase for checking curl is working for webservers
+
+RUN `python -m pytest -v  --ansible-inventory=inventory/hosts --connection=ansible tests/webservers_test.py  --force-ansible`
+
+Result
+
+**For testing Loadbalancer**
+ 
+ I have written 5 testcases for testing loadbalancer
+ 
+- TestCase for having root prevelleges
+- TestCase for validating haproxy is installed on the loadbalancer
+- TestCase for validating the haproxy service is running on the loadbalancer
+- Testcase for validating loadbalancer is working fine even one node is down
+- TestCase for checking curl is working for loadbalancer
+
+Result
+ 
