@@ -40,7 +40,16 @@ Note: If any issues faced, try alternate setup without terraform.
 ## Results
 
 **Round Robbin Configuration**
+
 Repeatedly RUN `curl 192.168.33.30` or RUN `192.168.33.30` in browser (192.168.33.30 is loadbalancer ip), we will get alternatively
 
 ![snapshot 1](https://github.com/Nogutsune/HA_Proxy_WebServer_Setup/blob/master/Screenshots/ScreenShot1.png)  
-![snapshot 2](https://github.com/Nogutsune/HA_Proxy_WebServer_Setup/blob/master/Screenshots/ScreenShot2.png) 
+![snapshot 2](https://github.com/Nogutsune/HA_Proxy_WebServer_Setup/blob/master/Screenshots/ScreenShot2.png)
+
+**Stick Session Configuration**
+
+Repeatedly RUN `curl 192.168.33.30` or RUN `192.168.33.30` in browser (192.168.33.30 is loadbalancer ip), we will get only either one the webpages (based on bind cookie).
+
+![snapshot 1](https://github.com/Nogutsune/HA_Proxy_WebServer_Setup/blob/master/Screenshots/ScreenShot1.png)
+
+If one of the node (webserver) is down the loadbalancer automatically serves traffic from healhy node.
