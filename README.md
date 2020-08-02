@@ -88,3 +88,21 @@ Result
 
 ![snapshot 4](https://github.com/Nogutsune/HA_Proxy_WebServer_Setup/blob/master/Screenshots/ScreenShot4.png)
 
+## Bonus Tasks
+
+- Brief summary of what you liked about your solution
+
+This solution demonstrate knowlegde on lot of DevOps tools like Vagrant, Terraform, Ansible, HAproxy and Testinfra(python).
+
+- Brief summary of what you disliked about your solution
+
+Instead of assigning fixed ips to the VMs, I could have used dynamic ips. But I haven't hardcoded ips anywhere the Ansible playbook read ips from inventory file only. 
+
+- Configurable Round Robin / Sticky Load Balancer
+
+Yes, I have added both the configurations for loadbalancer. Based on the value of sticky_session passed by the user, playbook will set haproxy.cnf file in loadbalance vm. Basically I have two jinja2 templates `templates/haproxy.cfg.j2` for roundrobbin and `templates/haproxy_sticky_session.cfg.j2` for stickysession.
+
+- Return instance identifier of your webserver in addition to “Hello World”
+
+Yes, I have included webserver identifier and webserver ip along with Hello World. My webpages will return
+`Hello World from <webserver1/webserver2>, ip: <webserver ip>`
