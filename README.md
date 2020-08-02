@@ -70,6 +70,8 @@ RUN `python -m pytest -v  --ansible-inventory=inventory/hosts --connection=ansib
 
 Result
 
+![snapshot 3](https://github.com/Nogutsune/HA_Proxy_WebServer_Setup/blob/master/Screenshots/ScreenShot3.png)
+
 **For testing Loadbalancer**
  
  I have written 5 testcases for testing loadbalancer
@@ -83,4 +85,6 @@ Result
 RUN `python -m pytest -v  --ansible-inventory=inventory/hosts --connection=ansible tests/loadbalancer_test.py  --force-ansible`
 
 Result
- 
+
+![snapshot 4](https://github.com/Nogutsune/HA_Proxy_WebServer_Setup/blob/master/Screenshots/ScreenShot4.png)
+
