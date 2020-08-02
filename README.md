@@ -51,7 +51,6 @@ Repeatedly RUN `curl 192.168.33.30` or RUN `192.168.33.30` in browser (192.168.3
 Repeatedly RUN `curl 192.168.33.30` or RUN `192.168.33.30` in browser (192.168.33.30 is loadbalancer ip), we will get only either one the webpages (based on bind cookie).
 
 ![snapshot 1](https://github.com/Nogutsune/HA_Proxy_WebServer_Setup/blob/master/Screenshots/ScreenShot1.png)
-
 If one of the node (webserver) is down the loadbalancer automatically serves traffic from healhy node.
 
 ## Executing Automated Infrastructure tests
@@ -80,6 +79,8 @@ Result
 - TestCase for validating the haproxy service is running on the loadbalancer
 - Testcase for validating loadbalancer is working fine even one node is down
 - TestCase for checking curl is working for loadbalancer
+
+RUN `python -m pytest -v  --ansible-inventory=inventory/hosts --connection=ansible tests/loadbalancer_test.py  --force-ansible`
 
 Result
  
